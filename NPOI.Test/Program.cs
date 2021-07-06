@@ -38,35 +38,54 @@ namespace NPOI.Test
                     var para = element as XWPFParagraph;
 
                     foreach (var run in para.IRuns) {
-                        //para.Runs[0].
-                    }
 
-                    for (int i = 0; i < para.IRuns.Count; i++)
-                    {
-                        var run = para.IRuns[i];
                         if (run is XWPFSDT sdt)
                         {
-
-                            if (sdt.Content is XWPFSDTContent abc) {
-                                if (abc._sdtRun.Items[0] is CT_R cT_R) {
-                                    if (cT_R.Items[0] is CT_Text cT_Text) {
-                                        cT_Text.Value = "111";
+                            if (sdt.Content is XWPFSDTContent abc)
+                            {
+                                if (abc._sdtRun.Items[0] is CT_R cT_R)
+                                {
+                                    if (cT_R.Items[0] is CT_Text cT_Text)
+                                    {
+                                       // cT_Text.Value = "test";
                                     }
                                 }
-                                 
-                                 ///abc._sdtRun.Items;
+                            }
+                        }
+                    }
+                }
+                ///表格包括内容控件
+                if (element.ElementType == BodyElementType.TABLE) {
+                    var wPFTable = element as XWPFTable;
 
-                                //abc._sdtRun.Items//.Add()
+                    foreach (var row in wPFTable.Rows) {
 
-                                // para.CreateRun().AppendText("zhang");
+                        foreach (var cell in row.GetTableCells()) {
+                            var paras = cell.Paragraphs;
+
+                            foreach (var para in paras)
+                            {
+                                foreach (var run in para.IRuns)
+                                {
+                                    if (run is XWPFSDT sdt)
+                                    {
+                                        if (sdt.Content is XWPFSDTContent abc)
+                                        {
+                                            if (abc._sdtRun.Items[0] is CT_R cT_R)
+                                            {
+                                                if (cT_R.Items[0] is CT_Text cT_Text)
+                                                {
+                                                    // cT_Text.Value = "test";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
 
-                            var tag = sdt.GetTag();
-
-                            //para.InsertNewRun(i).SetText("zhang");
                         }
-
                     }
+
 
                 }
 
